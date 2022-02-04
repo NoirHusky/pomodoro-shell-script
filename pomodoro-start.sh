@@ -7,9 +7,9 @@ while [ 1 ]
 do
     if [ $skip -eq 100 ]
     then
-	    xmessage "Time to work"
+	    xmessage "Time to work" -geometry 400x100 -center
     fi
-    secs=1
+    secs=1500
     while [ $secs -gt -1 ]
     do
 	clear
@@ -20,7 +20,7 @@ do
     done
     count=$(( $count + 1 ))
     
-    xmessage "Time to take a break" -buttons "Take a Break:100,Skip:101"
+    xmessage "Time to take a break" -buttons "Take a Break:100,Skip:101" -geometry 400x100 -center
     skip=$?
     # if we choose to take a break
     if [ $skip -eq 100 ]
