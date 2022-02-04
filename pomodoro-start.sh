@@ -1,10 +1,15 @@
 #!/bin/bash
 
 count=0;
+skip=100;
+
 while [ 1 ]
 do
-    xmessage "Time to work"
-    secs=1500
+    if [ $skip -eq 100 ]
+    then
+	    xmessage "Time to work"
+    fi
+    secs=1
     while [ $secs -gt -1 ]
     do
 	clear
@@ -15,14 +20,19 @@ do
     done
     count=$(( $count + 1 ))
     
-    xmessage "Time to take a break"    
-    secs=300
-    while [ $secs -gt -1 ]
-    do
-	clear
-    	sleep 1 &
-	printf "Pomodoro (#Break): \t%02d:%02d:%02d\nPomodoros (#%d)" $((secs/3600)) $(( (secs/60)%60)) $((secs%60)) $(( count ))
-        secs=$(( $secs - 1 ))
-    	wait
-    done
+    xmessage "Time to take a break" -buttons "Take a Break:100,Skip:101"
+    skip=$?
+    # if we choose to take a break
+    if [ $skip -eq 100 ]
+    then
+	    secs=300
+	    while [ $secs -gt -1 ]
+	    do
+		clear
+		sleep 1 &
+		printf "Pomodoro (#Break): \t%02d:%02d:%02d\nPomodoros (#%d)" $((secs/3600)) $(( (secs/60)%60)) $((secs%60)) $(( count ))
+		secs=$(( $secs - 1 ))
+		wait
+	    done
+    fi
 done
